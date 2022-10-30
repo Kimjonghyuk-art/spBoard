@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardDAO">
+
+<select id="findAllBoards" resultType="BoardVO">
+	SELECT *
+	FROM
+	board
+</select>
+
+<select id="getBoard" resultType="BoardVO">
+	SELECT *
+	FROM board
+	WHERE idx = #{idx}
+
+</select>
+
+<delete id="delBoard" parameterType="BoardVO">
+	DELETE 
+	FROM board
+	WHERE idx = #{idx}
+</delete>
+
+<select id="getMaxIdx" resultType="int">
+	SELECT
+	MAX(idx)
+	FROM board
+</select>
+
+<insert id="upsert" parameterType="BoardVO">
+INSERT INTO board (
+	idx
+	,writer
+	,title
+	,content
+	,create_date
+	,hit
+	) VALUES (
+		#{idx}
+		,#{writer}
+		,#{title}
+		,#{content}
+		,NOW()
+		,default
+
+) ON DUPLICATE KEY
+UPDATE
+	title = #{title}
+	,content = #{content}
+	,writer = #{writer}
+</insert>
+
+
+</mapper>
