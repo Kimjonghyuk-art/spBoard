@@ -49,6 +49,7 @@
 		 , create_date
 		 , hit
 		 , content
+		 , uploadFile
 	FROM board
 	WHERE idx = #{idx}
 

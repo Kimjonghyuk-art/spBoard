@@ -8,6 +8,13 @@ public class BoardVO extends Pagination{
 	private String writer;
 	private String title;
 	private String content;
+	private String uploadFile;
+	public String getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(String uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	public String getContent() {
 		return content;
 	}

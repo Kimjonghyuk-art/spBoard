@@ -4,7 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.board.app.service.BoardService;
@@ -29,9 +31,11 @@ public class BoardRestController {
 	
 	//등록 및 수정
 	@RequestMapping("/upsert.ajax")
-	public ModelAndView upsert(@RequestBody BoardVO boardVO) throws Exception {
+	public ModelAndView upsert(@RequestBody BoardVO boardVO, @RequestParam MultipartFile uploadData) throws Exception {
 		ModelAndView mav = new ModelAndView("jsonView");
-		boardService.upsertAction(boardVO);
+		
+		
+		//boardService.upsertAction(boardVO);
 		return mav;
 	}
 	
