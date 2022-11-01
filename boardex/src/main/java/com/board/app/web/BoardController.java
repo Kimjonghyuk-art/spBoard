@@ -1,6 +1,5 @@
 package com.board.app.web;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.app.service.BoardService;
 import com.board.app.vo.BoardVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller

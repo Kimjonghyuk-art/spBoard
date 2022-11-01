@@ -33,7 +33,7 @@
 			
 		<tbody>
 			<tr v-for="item in list" style="cursor:pointer;">
-				<td>{{item.idx}}</td>
+					<td>{{item.idx}}</td>
 					<td>{{item.title}}</td>
 					<td>{{item.writer}}</td>
 					<td>{{item.createDate}}</td>

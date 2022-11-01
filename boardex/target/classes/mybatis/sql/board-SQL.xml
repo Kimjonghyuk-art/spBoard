@@ -44,7 +44,8 @@
 </select>
 
 <select id="getBoard" resultType="BoardVO">
-	SELECT title
+	SELECT idx
+		 , title
 		 , writer
 		 , create_date
 		 , hit

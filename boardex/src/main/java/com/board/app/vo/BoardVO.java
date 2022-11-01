@@ -1,7 +1,6 @@
 package com.board.app.vo;
 
 import com.board.app.common.Pagination;
-
 public class BoardVO extends Pagination{
 
 	private int idx;

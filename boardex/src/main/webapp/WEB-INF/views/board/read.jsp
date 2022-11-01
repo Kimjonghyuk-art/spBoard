@@ -3,6 +3,7 @@
 
 <h1>read Page</h1>
 <div id="info">
+<h1>{{info.idx}}</h1>
 	<table>
 		
 		<tbody>
@@ -53,10 +54,11 @@ let vue = new Vue({
 
 		//삭제
 		del: function() {
-			var vue = this;
+			let vue = this;
 				if(!confirm('삭제하시겠습니까?')) return false;
-
+				
 				console.log(JSON.stringify(vue.info));
+				console.log(vue.info.idx);
 				$.ajax({
 					url : '/board/json/del.ajax',
 					contentType : "application/json; charset=UTF-8",
