@@ -9,6 +9,11 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!-- 공통 js -->
+
+<script src="/resources/js/board/common.js"></script>
+
 </head>
 <body>
 <tiles:insertAttribute name="header" ignore="true"></tiles:insertAttribute>

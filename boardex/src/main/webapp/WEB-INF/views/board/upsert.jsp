@@ -45,7 +45,7 @@
 					return false;
 				} else if(this.info.writer == null || this.info.writer == '') {
 					alert('작성자를 입력해주세요.');
-					$("#updtNm").focus();
+					$("#writer").focus();
 					return false;
 				} else if(this.info.content == null || this.info.content == '') {
 					alert('내용을 입력해주세요.');
@@ -67,11 +67,11 @@
 					dataType : 'json',
 					success : function(data) {
 						alert('등록 완료');
-						vue.goList();
+						location.href="/board/list.do";
 					},
 					error : function(e) {
 						console.log(e);
-						alert('에러 발생\n관리자에게 문의하세요.');
+						alert('에러');
 					},
 
 				});

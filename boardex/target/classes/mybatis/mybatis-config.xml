@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true"/> <!-- mapper 캐시 전역 사용여부 -->
+		<setting name="lazyLoadingEnabled" value="false"/> <!-- mybatis 지연 로딩 사용여부 -->
+		<setting name="multipleResultSetsEnabled" value="true"/> <!-- 한개의 구문에서 여러개의  ResultSet 허용 여부 -->
+		<setting name="useColumnLabel" value="true"/> <!-- 컬럼명 대신 컬럼라벨 사용 여부 -->
+		<setting name="useGeneratedKeys" value="false"/> <!-- 키자동생성 -->
+		<setting name="defaultExecutorType" value="SIMPLE"/>
+		<setting name="defaultStatementTimeout" value="25000"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="callSettersOnNulls" value="true"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.board.app.vo.BoardVO" alias="BoardVO"/>
+	</typeAliases>
+	
+</configuration>

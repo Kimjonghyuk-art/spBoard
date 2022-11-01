@@ -27,7 +27,13 @@ public class BoardController {
 	public String list(Model model,BoardVO boardVO) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		
-		model.addAttribute("list", mapper.writeValueAsString(boardService.findAllBoards(null)));
+		boardVO.setPerPage(5);
+		boardVO.setPagingCnt(3);
+		int totalCnt = boardService.getBoardsCnt(boardVO);
+		boardVO.setTotalCnt(totalCnt);
+		
+		model.addAttribute("list", mapper.writeValueAsString(boardService.findAllBoards(boardVO)));
+		model.addAttribute("page", mapper.writeValueAsString(boardVO));
 		return "board/list.tiles";
 	}
 	

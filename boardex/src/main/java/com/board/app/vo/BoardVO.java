@@ -1,8 +1,8 @@
 package com.board.app.vo;
 
-import java.sql.Date;
+import com.board.app.common.Pagination;
 
-public class BoardVO {
+public class BoardVO extends Pagination{
 
 	private int idx;
 	private String writer;

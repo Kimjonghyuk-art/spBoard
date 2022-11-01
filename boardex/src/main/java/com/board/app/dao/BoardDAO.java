@@ -37,4 +37,8 @@ public class BoardDAO {
 		return sql.insert("boardDAO.upsert",boardVO);
 	}
 	
+	public int getBoardsCnt(BoardVO boardVO) {	
+		return sql.selectOne("boardDAO.getBoardsCnt", boardVO);
+	}
+	
 }

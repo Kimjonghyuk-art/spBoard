@@ -48,6 +48,10 @@ public class BoardService {
 		return boardVO;
 	}
 
+	//게시판 목록 갯수 조회
+	public int getBoardsCnt(BoardVO boardVO) {
+		return boardDAO.getBoardsCnt(boardVO);
+	}
 
 	
 }
