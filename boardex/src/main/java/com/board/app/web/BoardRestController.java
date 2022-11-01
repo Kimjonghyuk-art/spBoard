@@ -1,15 +1,18 @@
 package com.board.app.web;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.board.app.service.BoardService;
+import com.board.app.vo.BoardFileVO;
 import com.board.app.vo.BoardVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,10 +34,17 @@ public class BoardRestController {
 	
 	//등록 및 수정
 	@RequestMapping("/upsert.ajax")
-	public ModelAndView upsert(@RequestBody BoardVO boardVO, @RequestParam MultipartFile uploadData) throws Exception {
+	public ModelAndView upsert(BoardVO boardVO, MultipartFile file) throws Exception {
+		BoardFileVO boardFile = new BoardFileVO();
+		boardFile.setFileOriginalName(file.getOriginalFilename()); // 파일
+		boardFile.setFileContentType(file.getContentType());
+		boardFile.setFileStoredName(UUID.randomUUID().toString().replaceAll("-", "") + file.getOriginalFilename());
+		boardFile.setFilePath("/Users/jonghyuk/temp/" + boardFile.getFileStoredName());
+		File uploadFile = new File(boardFile.getFilePath());
+		uploadFile.getParentFile().mkdirs();
+		file.transferTo(uploadFile);
+	
 		ModelAndView mav = new ModelAndView("jsonView");
-		
-		
 		//boardService.upsertAction(boardVO);
 		return mav;
 	}

@@ -1,9 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+<style>
+	#write {
+		width:50%;
+		margin: 0 auto;
+	}
+
+	#formWrapper {
+		width: 100%;
+	}
+	#formWrapper label {
+		font-weight: bold;
+		color: pink;
+	}
+	#formWrapper input {
+		width: 80%;
+	}
+</style>
 <div id="write">
 <h1>upsert Page</h1>
-
-<table>
+<div id="formWrapper">
+	<form id="fileForm" enctype="multipart/form-data" method="POST">
+		<div>
+			<label>제목</label>
+			<input type="text" id="title" name="title" v-model="info.title">
+		</div>
+		<div>
+			<label>작성자</label>
+			<input type="text" id="writer" name="writer" v-model="info.writer">
+		</div>
+		<div>
+			<label>내용</label>
+			<input type="text" id="content" name="content" v-model="info.content">
+		</div>
+		<div>
+			<label>파일</label>
+			<input type="file" id="uploadFile" name="file">
+		</div>
+		<button type="button" @click="upsert">등록</button>
+	</form>
+</div>
+<!-- <table>
 	<tbody>
 		<tr>
 			<th>제목</th>
@@ -22,14 +59,14 @@
 			<td><input type="file" id="uploadFile" name="uploadFile" @change="changeFile"></td>
 		</tr>
 	</tbody>
-
 </table>
+
 
 
 <div class="btn">
 	<button type="button" @click="upsert">등록</button>
 	<button type="button" @click="cancel">취소</button>
-</div>
+</div> -->
 
 </div>
 
@@ -62,21 +99,15 @@
 			upsert: function() {
 				let vue = this;
 				if(!this.formChck()) return;
-				let formData = new FormData();
-				console.log(vue.info.title);
-				console.log(vue.info.writer);
-				console.log(vue.info.content);
-				console.log(vue.info.uploadFile);
-				formData.append('title', vue.info.title);
-				formData.append('writer', vue.info.writer);
-				formData.append('content', vue.info.content);
-				formData.append('uploadFile', vue.info.uploadFile);
+				let form = $("#fileForm")[0];
+				let formData = new FormData(form);
+				formData.append("file", $("input[name=file]")[0].files[0]);
 				$.ajax({
 					url : '/board/json/upsert.ajax',
-					contentType : "application/json; charset=UTF-8",
-					method : 'POST',
-					data : JSON.stringify(vue.info),formData,
-					dataType : 'json',
+					contentType : false,
+					processData : false,
+					type : 'POST',
+					data : formData,
 					success : function(data) {
 						alert('등록 완료');
 						location.href="/board/list.do";
