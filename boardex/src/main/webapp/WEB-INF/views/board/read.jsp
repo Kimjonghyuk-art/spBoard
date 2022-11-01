@@ -3,7 +3,6 @@
 
 <h1>read Page</h1>
 <div id="info">
-<h1>{{info.idx}}</h1>
 	<table>
 		
 		<tbody>
