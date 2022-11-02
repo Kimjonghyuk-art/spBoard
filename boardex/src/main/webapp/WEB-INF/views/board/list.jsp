@@ -54,6 +54,15 @@
 
 <script>
 $( document ).ready(function() {
+	
+
+	if (localStorage.getItem("temporary user") === null) {
+			let randomStr = Math.random().toString(36).substring(2, 12);
+			console.log(randomStr);
+			localStorage.setItem("temporary user",randomStr);
+			
+			} 
+			
   $("#board tbody tr").click(function() {
 		console.log("click");
 		let idx = $(this).find("td:eq(0)").text();

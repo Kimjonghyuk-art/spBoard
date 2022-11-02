@@ -8,5 +8,12 @@
 </head>
 <body>
 <h1>header 영역</h1>
+
+
+<script>
+
+		
+</script>
 </body>
+
 </html>

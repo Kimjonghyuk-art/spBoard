@@ -1,7 +1,5 @@
 package com.board.app.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.board.app.common.Pagination;
 
 public class BoardVO extends Pagination{
@@ -10,12 +8,16 @@ public class BoardVO extends Pagination{
 	private String writer;
 	private String title;
 	private String content;
-	private String uploadFile;
-	public String getUploadFile() {
-		return uploadFile;
+	private String createDate;
+	private int hit;
+	private int likeNo;
+	
+	
+	public int getLikeNo() {
+		return likeNo;
 	}
-	public void setUploadFile(String uploadFile) {
-		this.uploadFile = uploadFile;
+	public void setLikeNo(int likeNo) {
+		this.likeNo = likeNo;
 	}
 	public String getContent() {
 		return content;
@@ -23,8 +25,6 @@ public class BoardVO extends Pagination{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	private String createDate;
-	private int hit;
 	
 	public int getIdx() {
 		return idx;

@@ -44,12 +44,15 @@
 </select>
 
 <select id="getBoard" resultType="BoardVO">
-	SELECT title
+	SELECT idx
+		 , title
 		 , writer
 		 , create_date
 		 , hit
 		 , content
-		 , uploadFile
+		 , (SELECT COUNT(like_no) 
+		 	  FROM boardLike 
+		 	 WHERE board_idx = idx) AS likeNo
 	FROM board
 	WHERE idx = #{idx}
 
@@ -99,5 +102,56 @@ UPDATE
 			<include refid="pagination"></include>
 		</where>
 </select>
+
+<!-- file 등록 -->
+<insert id="fileUpsert" parameterType="BoardFileVO">
+INSERT INTO boardfile (file_original_name
+					 , file_stored_name
+					 , file_content_type
+					 , file_upload_date
+					 , file_path
+					 , idx)
+VALUES (#{fileOriginalName}
+		, #{fileStoredName}
+		, #{fileContentType}
+		, NOW()
+		, #{filePath}
+		, #{idx}
+)
+</insert>
+
+<!-- file 가져오기 -->
+<select id="getFile" resultType="BoardFileVO">
+SELECT * FROM boardfile WHERE idx = #{idx}
+
+</select>
+
+
+<!-- 좋아요 확인 여부 -->
+<select id="findLike" resultType="int">
+SELECT count(*) 
+FROM boardlike 
+WHERE board_idx = #{boardIdx} 
+	AND userId = #{userId}
+	
+</select>
+
+<!-- 좋아요 등록 -->
+<insert id="insertLike" parameterType="BoardLikeVO">
+
+INSERT INTO boardLike (board_idx,userId)
+VALUES (#{boardIdx}
+	   ,#{userId})
+</insert>
+
+<!-- 좋아요 삭제 -->
+<delete id="deleteLike" parameterType="BoardLikeVO">
+DELETE FROM boardLike
+WHERE board_idx = #{boardIdx} 
+AND userId = #{userId}
+</delete>
+
+
+
 
 </mapper>

@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.board.app.vo.BoardFileVO;
+import com.board.app.vo.BoardLikeVO;
 import com.board.app.vo.BoardVO;
 
 @Repository("boardDAO")
@@ -36,9 +38,36 @@ public class BoardDAO {
 	public int upsert(BoardVO boardVO) {
 		return sql.insert("boardDAO.upsert",boardVO);
 	}
+	//파일 등록 및 수정 처리
+	public int fileUpsert(BoardFileVO boardFileVO) {
+		return sql.insert("boardDAO.fileUpsert",boardFileVO);
+	}
 	
+	//게시글 목록 갯수
 	public int getBoardsCnt(BoardVO boardVO) {	
 		return sql.selectOne("boardDAO.getBoardsCnt", boardVO);
 	}
+	//좋아요 확인 여부
+	public int findLike(BoardLikeVO boardLikeVO) {
+		return sql.selectOne("boardDAO.findLike",boardLikeVO);
+	}
+	
+	//좋아요 등록
+	public int insertLike(BoardLikeVO boardLikeVO) {
+		return sql.insert("boardDAO.insertLike", boardLikeVO);
+	}
+	
+	//좋아요 삭제 
+	public int deleteLike(BoardLikeVO boardLikeVO) {
+		return sql.delete("boardDAO.deleteLike", boardLikeVO);
+		
+	}
+	//파일 가져오기
+	public BoardFileVO getFile(int idx) {
+		return sql.selectOne("boardDAO.getFile",idx);
+	}
+	
+	
+	
 	
 }
