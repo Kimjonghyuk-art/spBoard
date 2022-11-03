@@ -15,9 +15,11 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.app.board.vo.BoardVO" alias="BoardVO"/>
+		<package name="com.app.board"/>
+		<package name="com.app.login"/>
+		<!-- <typeAlias type="com.app.board.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.app.board.vo.BoardFileVO" alias="BoardFileVO"/>
-		<typeAlias type="com.app.board.vo.BoardLikeVO" alias="BoardLikeVO"/>
+		<typeAlias type="com.app.board.vo.BoardLikeVO" alias="BoardLikeVO"/> -->
 	</typeAliases>
 	
 </configuration>
