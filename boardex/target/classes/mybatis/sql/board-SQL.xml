@@ -44,17 +44,20 @@
 </select>
 
 <select id="getBoard" resultType="BoardVO">
-	SELECT idx
-		 , title
-		 , writer
-		 , create_date
-		 , hit
-		 , content
-		 , (SELECT COUNT(like_no) 
-		 	  FROM boardLike 
-		 	 WHERE board_idx = idx) AS likeNo
-	FROM board
-	WHERE idx = #{idx}
+	SELECT board.idx
+		 , board.title
+		 , board.writer
+		 , board.create_date
+		 , board.hit
+		 , board.content
+         , boardfile.file_no AS fileNo
+         , COUNT(boardlike.like_no) AS likeNo
+     FROM board 
+     JOIN boardfile 
+       ON boardfile.idx = board.idx
+	 JOIN boardlike
+       ON boardlike.board_idx = board.idx
+	WHERE board.idx = #{idx}
 
 </select>
 
@@ -105,19 +108,27 @@ UPDATE
 
 <!-- file 등록 -->
 <insert id="fileUpsert" parameterType="BoardFileVO">
-INSERT INTO boardfile (file_original_name
+INSERT INTO boardfile (file_no
+					 , file_original_name
 					 , file_stored_name
 					 , file_content_type
 					 , file_upload_date
 					 , file_path
 					 , idx)
-VALUES (#{fileOriginalName}
+VALUES (#{fileNo}
+		, #{fileOriginalName}
 		, #{fileStoredName}
 		, #{fileContentType}
 		, NOW()
 		, #{filePath}
 		, #{idx}
-)
+) ON DUPLICATE KEY
+	UPDATE
+		file_original_name = #{fileOriginalName}
+	   ,file_stored_name = #{fileStoredName}
+	   ,file_content_type = #{fileContentType}
+	   ,file_upload_date = now()
+	   ,file_path = #{filePath}
 </insert>
 
 <!-- file 가져오기 -->
@@ -126,6 +137,16 @@ SELECT * FROM boardfile WHERE idx = #{idx}
 
 </select>
 
+<!-- file 삭제 -->
+<delete id="delFile">
+DELETE FROM boardfile
+WHERE file_no = #{fileNo}
+</delete>
+
+<!-- 파일 최대번호 조회 -->
+<select id="getMaxFileNo" resultType="int">
+SELECT MAX(file_no) FROM boardfile
+</select>
 
 <!-- 좋아요 확인 여부 -->
 <select id="findLike" resultType="int">
@@ -151,6 +172,19 @@ WHERE board_idx = #{boardIdx}
 AND userId = #{userId}
 </delete>
 
+<!-- 좋아요 수 조회 -->
+<select id="getLikeCnt" resultType="int">
+SELECT COUNT(like_no) 
+  FROM boardlike 
+ WHERE board_idx = #{boardIdx}
+</select>
+
+<!-- 조회수 증가 -->
+<update id="boardHitUp">
+UPDATE board 
+   SET hit = hit+1
+ WHERE idx = #{idx}
+</update>
 
 
 

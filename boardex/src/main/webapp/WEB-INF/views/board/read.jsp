@@ -28,17 +28,16 @@
 			</tr>
 			<tr>
 				<th><button type="button" id="likeBtn" class="" @click="like">좋아요♥</button></th>
-				<td>{{info.likeNo}}</td>
+				<td><input type="text" v-model="info.likeNo"></td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
 				<td>
 					<div v-if="file != null">
-					<a href="/board/downloadtest.do?idx=37" @click="download()"><input type="text" v-model="file.fileOriginalName"></a>
+					<a href="#" @click="download">{{file.fileOriginalName}}</a>
 				</div>
 					<div v-else>
-						널
-
+						첨부파일 없음
 					</div>
 				</td>
 			</tr>
@@ -78,8 +77,29 @@ let vue = new Vue({
 		del: function() {
 			var vue = this;
 				if(!confirm('삭제하시겠습니까?')) return false;
+				if(vue.file != null ) {
+					let obj = {fileNo : vue.file.fileNo,
+										idx : vue.info.idx};
+					console.log(JSON.stringify(obj));
+				 $.ajax({
+				 	url : '/board/json/delfile.ajax',
+				 	contentType : "application/json; charset=UTF-8",
+				 	method : 'POST',
+					async: false,
+				 	data : JSON.stringify(obj),
+				 	dataType : 'json',
+				 	success : function(data) {
+				 		//alert('삭제 완료');
+				 	},
+				 	error : function(e) {
+				 		console.log(e);
+				 		alert('파일 삭제에러 발생');
+				 	},
 
-				console.log(JSON.stringify(vue.info));
+				 });
+				 }
+
+				
 				 $.ajax({
 				 	url : '/board/json/del.ajax',
 				 	contentType : "application/json; charset=UTF-8",
@@ -92,10 +112,14 @@ let vue = new Vue({
 				 	},
 				 	error : function(e) {
 				 		console.log(e);
-				 		alert('에러 발생');
+				 		alert('글 삭제에러 발생');
 				 	},
 
 				 });
+			
+				
+
+
 			
 		},
 
@@ -117,13 +141,11 @@ let vue = new Vue({
 						data : JSON.stringify(findLikeObj),
 						dataType : 'json',
 						success : function(data) {
-							alert('좋아요 완료');
 							console.log(data.toString());
 							if(data.toString() == '0') {
 								//좋아요 등록
 								console.log("좋아요 등록")
 								//insertLike(findLikeObj);
-
 									//인설트
 									$.ajax({
 										url : '/board/json/insertlike.ajax',
@@ -133,7 +155,8 @@ let vue = new Vue({
 										dataType : 'json',
 										success : function(data) {
 											alert('좋아요 등록완료');
-											
+											console.log("좋아요 데이터->"+data);
+											vue.info.likeNo = data;
 										},
 										error : function(e) {
 											console.log(e);
@@ -141,8 +164,6 @@ let vue = new Vue({
 										},
 
 									});
-
-
 
 							} else {
 								console.log("좋아요 삭제 ")
@@ -157,7 +178,7 @@ let vue = new Vue({
 										dataType : 'json',
 										success : function(data) {
 											alert('좋아요 취소완료');
-											
+											vue.info.likeNo = data;
 										},
 										error : function(e) {
 											console.log(e);
@@ -180,69 +201,50 @@ let vue = new Vue({
 			},
 
 
-			insertLike: function(findLikeObj) {
-					//인설트
-					$.ajax({
-						url : '/board/json/insertlike.ajax',
-						contentType : "application/json; charset=UTF-8",
-						method : 'POST',
-						data : JSON.stringify(findLikeObj),
-						dataType : 'json',
-						success : function(data) {
-							alert('좋아요 등록완료');
+			// insertLike: function(findLikeObj) {
+			// 		//인설트
+			// 		$.ajax({
+			// 			url : '/board/json/insertlike.ajax',
+			// 			contentType : "application/json; charset=UTF-8",
+			// 			method : 'POST',
+			// 			data : JSON.stringify(findLikeObj),
+			// 			dataType : 'json',
+			// 			success : function(data) {
+			// 				alert('좋아요 등록완료');
 							
-						},
-						error : function(e) {
-							console.log(e);
-							alert('에러 발생\n관리자에게 문의하세요.');
-						},
+			// 			},
+			// 			error : function(e) {
+			// 				console.log(e);
+			// 				alert('에러 발생\n관리자에게 문의하세요.');
+			// 			},
 
-					});
-			},
-			deleteLike: function(findLikeObj) {
-				//딜리트
-				$.ajax({
-						url : '/board/json/deletelike.ajax',
-						contentType : "application/json; charset=UTF-8",
-						method : 'POST',
-						data : JSON.stringify(findLikeObj),
-						dataType : 'json',
-						success : function(data) {
-							alert('좋아요 취소완료');
+			// 		});
+			// },
+			// deleteLike: function(findLikeObj) {
+			// 	//딜리트
+			// 	$.ajax({
+			// 			url : '/board/json/deletelike.ajax',
+			// 			contentType : "application/json; charset=UTF-8",
+			// 			method : 'POST',
+			// 			data : JSON.stringify(findLikeObj),
+			// 			dataType : 'json',
+			// 			success : function(data) {
+			// 				alert('좋아요 취소완료');
 							
-						},
-						error : function(e) {
-							console.log(e);
-							alert('에러 발생\n관리자에게 문의하세요.');
-						},
+			// 			},
+			// 			error : function(e) {
+			// 				console.log(e);
+			// 				alert('에러 발생\n관리자에게 문의하세요.');
+			// 			},
 
-					});
-			},
+			// 		});
+			// },
 
 			download: function() {
 				//e.preventDefault(); 
 				let vue = this;
+				location.href="/board/downloadtest.do?idx="+vue.info.idx;
 				
-					//console.log("vue file ->" + JSON.stringify(vue.file));
-				
-
-				//  $.ajax({
-				// 		url : '/board/json/downloadtest.ajax',
-				// 		contentType : "application/json; charset=UTF-8",
-				// 		method : 'POST',
-				// 		data : JSON.stringify(vue.file),
-				// 		dataType : 'json',
-				// 		success : function(data) {
-				// 			console.log("download.ajax success")
-							
-				// 		},
-				// 		error : function(e) {
-				// 			console.log(e);
-				// 			alert('에러 발생\n관리자에게 문의하세요.');
-				// 		},
-
-				// 	}); 
-
 			}
 
 

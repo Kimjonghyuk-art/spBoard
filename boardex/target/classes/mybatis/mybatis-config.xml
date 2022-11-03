@@ -15,9 +15,9 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.board.app.vo.BoardVO" alias="BoardVO"/>
-		<typeAlias type="com.board.app.vo.BoardFileVO" alias="BoardFileVO"/>
-		<typeAlias type="com.board.app.vo.BoardLikeVO" alias="BoardLikeVO"/>
+		<typeAlias type="com.app.board.vo.BoardVO" alias="BoardVO"/>
+		<typeAlias type="com.app.board.vo.BoardFileVO" alias="BoardFileVO"/>
+		<typeAlias type="com.app.board.vo.BoardLikeVO" alias="BoardLikeVO"/>
 	</typeAliases>
 	
 </configuration>

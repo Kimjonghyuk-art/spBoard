@@ -21,6 +21,7 @@
 <h1>upsert Page</h1>
 <div id="formWrapper">
 	<form id="fileForm" enctype="multipart/form-data" method="POST">
+		<input type="hidden" id="idx" name="idx" v-model="info.idx">
 		<div>
 			<label>제목</label>
 			<input type="text" id="title" name="title" v-model="info.title">
@@ -35,38 +36,16 @@
 		</div>
 		<div>
 			<label>파일</label>
-			<input type="file" id="uploadFile" name="file">
+			<input type="file" id="uploadFile" name="uploadFile"> 
+			<div v-if="file != null">
+				{{file.fileOriginalName}}
+			</div>
 		</div>
 		<button type="button" @click="upsert">등록</button>
+		<button type="button" @click="cancel">취소</button>
 	</form>
 </div>
-<!-- <table>
-	<tbody>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" id="title" name="title" placeholder="제목을 입력해주세요." v-model="info.title"></td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td><input type="text" id="writer" name="writer" placeholder="작성자를 입력해주세요." v-model="info.writer"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><input type="text" id="content" name="content" placeholder="내용을 입력해주세요." v-model="info.content"></td>
-		</tr>
-		<tr>
-			<th>파일첨부</th>
-			<td><input type="file" id="uploadFile" name="uploadFile" @change="changeFile"></td>
-		</tr>
-	</tbody>
-</table>
 
-
-
-<div class="btn">
-	<button type="button" @click="upsert">등록</button>
-	<button type="button" @click="cancel">취소</button>
-</div> -->
 
 </div>
 
@@ -75,6 +54,7 @@
 		el: "#write",
 		data: {
 			info : ${board},
+			file : ${file},
 		},
 		methods: {
 		
@@ -101,7 +81,11 @@
 				if(!this.formChck()) return;
 				let form = $("#fileForm")[0];
 				let formData = new FormData(form);
-				formData.append("file", $("input[name=file]")[0].files[0]);
+					
+				
+					console.log("check");
+					formData.append("file", $("input[name=uploadFile]")[0].files[0]);					
+				console.log(formData)
 				$.ajax({
 					url : '/board/json/upsert.ajax',
 					contentType : false,
