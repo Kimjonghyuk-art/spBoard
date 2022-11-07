@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="LoginDAO">
+<mapper namespace="loginDAO">
 
+<insert id="signUp">
+	INSERT INTO user(user_name
+					,email
+					,sign_up_date
+					,user_pw) 
+		  VALUES(#{userName}
+		  		 ,#{email}
+		  		,NOW()
+		  		,#{userPw})
+</insert>
 
+<select id="getInfo" parameterType="UserVO" resultType="UserVO">
+	SELECT * FROM
+	user
+	WHERE email = #{email}
+
+</select>
 
 </mapper>
