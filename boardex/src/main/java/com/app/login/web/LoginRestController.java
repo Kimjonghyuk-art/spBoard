@@ -2,6 +2,7 @@ package com.app.login.web;
 
 import javax.annotation.Resource;
 
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,20 +16,14 @@ public class LoginRestController {
 
 	@Resource(name = "loginService")
 	private LoginService loginService;
-	
-	//회원 등록
-	@RequestMapping("/signup.ajax")
-	public ModelAndView singup(@RequestBody UserVO userVO) throws Exception {
-		ModelAndView mav = new ModelAndView("jsonView");
-		loginService.signUp(userVO);
-		return mav;
+
+	//수정
+	@RequestMapping("/update.ajax")
+	public void update(UserVO userVO) throws Exception {
+		//ModelAndView mav = new ModelAndView("jsonView");
+			System.out.println(userVO);
+			
+		//return mav;
 	}
-	
-	//
-	/*
-	 * @RequestMapping("/signup.ajax") public ModelAndView singup(@RequestBody
-	 * UserVO userVO) throws Exception { ModelAndView mav = new
-	 * ModelAndView("jsonView"); loginService.signUp(userVO); return mav; }
-	 */
 	
 }

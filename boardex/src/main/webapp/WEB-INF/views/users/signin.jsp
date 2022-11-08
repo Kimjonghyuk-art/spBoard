@@ -18,8 +18,8 @@ text-align: center;
 	<h1>로그인 페이지</h1>	
 		<form action="/users/login.do" method="post">
 			<div>
-				<label>이메일</label>
-				<input type="text" id="email" name="email" v-model="email" placeholder="aaa@bbb.ccc">
+				<label>아이디</label>
+				<input type="text" id="userId" name="userId" v-model="userId" placeholder="id">
 			</div>
 			<div>
 				<label>비밀번호</label>
@@ -39,7 +39,7 @@ text-align: center;
 let vue = new Vue({
 	el: "#formWrapper",
 	data: {
-		email: "",
+		userId: "",
 		pw: "",
 	},
 	methods: {
@@ -51,22 +51,7 @@ let vue = new Vue({
 					pw: this.pw,
 			}
 			console.log(userData);
-			/*  $.ajax({
-					url : '/users/json/signin.ajax',
-					contentType : "application/json; charset=UTF-8",
-					method : 'post',
-					data : JSON.stringify(userData),
-					dataType : 'json',	
-					success : function(data) {
-						alert("로그인성공@")
-						location.href="/board/list.do";
-					},
-					error : function(e) {
-						console.log(e);
-						alert('에러 eee');
-					},
-					
-				});  */
+		
 			
 		},
 	}

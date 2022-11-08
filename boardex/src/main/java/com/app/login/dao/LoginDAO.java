@@ -18,9 +18,13 @@ public class LoginDAO {
 		return sql.insert("loginDAO.signUp",userVO);
 	}
 
-	public UserVO getInfo(String email) {
+	public UserVO getInfo(String userId) {
 		
-		return sql.selectOne("loginDAO.getInfo",email);
+		return sql.selectOne("loginDAO.getInfo",userId);
+	}
+
+	public int updateUser(UserVO userVO) {
+		return sql.update("loginDAO.updateUser",userVO);
 	}
 	
 }

@@ -3,21 +3,49 @@
 <mapper namespace="loginDAO">
 
 <insert id="signUp">
-	INSERT INTO user(user_name
-					,email
-					,sign_up_date
-					,user_pw) 
-		  VALUES(#{userName}
-		  		 ,#{email}
-		  		,NOW()
-		  		,#{userPw})
+	INSERT INTO TB_USER (USER_ID
+						, USER_PASSWORD
+						, USER_NAME 
+						, USER_AUTHORITY
+						, USER_ENABLED)
+		VALUES(#{userId}
+		       , #{userPassword} 
+		       , #{userName}
+		       , default
+		       , default)
 </insert>
 
 <select id="getInfo" parameterType="UserVO" resultType="UserVO">
-	SELECT * FROM
-	user
-	WHERE email = #{email}
-
+	SELECT
+			  USER_ID
+			, USER_PASSWORD
+			, USER_NAME
+			, USER_AUTHORITY
+			, USER_ENABLED
+		FROM TB_USER
+		WHERE USER_ID = #{userId}
 </select>
+
+<update id="updateUser" parameterType="UserVO" >
+	UPDATE tb_user 
+	   SET user_name = #{userName} 
+	 WHERE user_id = #{userId};
+ 
+
+
+</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

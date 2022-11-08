@@ -92,6 +92,9 @@ let vue = new Vue({
 				method : 'post',
 				data : JSON.stringify(vue.page),
 				dataType : 'json',	
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header, token);
+				   },
 				success : function(data) {
 					vue.list = JSON.parse(data.list);
 					
