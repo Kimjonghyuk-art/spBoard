@@ -1,33 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+.inline {
+	display: inline-block;
+}
+.contentarea {
+	border: none;
+	resize: none;	
+}
+.contentarea:focus {
+	outline : none;
+}
 
+</style>
 <h1>read Page</h1>
 <div id="info">
-	<table>
-		
+	<table class="table">
 		<tbody>
 			<tr>
-				<th>제목</th>
+				<th class="table-active">제목</th>
 				<td>{{info.title}}</td>
 			</tr>
 			<tr>
-				<th>작성자</th>
+				<th class="table-active">작성자</th>
 				<td>{{info.writer}}</td>
 			</tr>
 			<tr>
-				<th>작성일</th>
+				<th class="table-active">작성일</th>
 				<td>{{info.createDate}}</td>
 			</tr>
 			<tr>
-				<th>조회수</th>
+				<th class="table-active">조회수</th>
 				<td>{{info.hit}}</td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>{{info.content}}</td>
+				<td><textarea rows="10" cols="120" class="contentarea" readonly>{{info.content}}</textarea></td>
 			</tr>
 			<tr>
-				<th><button type="button" id="likeBtn" class="" @click="like">좋아요♥</button></th>
+				<th><button type="button" id="likeBtn"  @click="like" class="btn btn-primary">좋아요♥</button></th>
 				<td><input type="text" v-model="info.likeNo"></td>
 			</tr>
 			<tr>
@@ -47,9 +58,11 @@
 	
 	
 	<div class="btn">
-		<button type="button" @click="update">수정</button>
-		<button type="button" @click="del">삭제</button>
-		<button type="button" @click="goList">목록</button>
+		<div v-if="info.writer == userId" class="inline">
+			<button type="button" @click="update" class="btn btn-primary">수정</button>
+			<button type="button" @click="del" class="btn btn-primary">삭제</button>
+		</div>
+		<button type="button" @click="goList" class="btn btn-primary">목록</button>
 	
 	</div>
 </div>
@@ -63,6 +76,7 @@ $("document").ready(function(){
 let vue = new Vue({
 	el: "#info",
 	data: {
+		userId: ${userId},
 		info: ${board},
 		file: ${file},
 	},

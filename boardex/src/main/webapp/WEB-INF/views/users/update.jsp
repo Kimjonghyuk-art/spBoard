@@ -21,16 +21,11 @@
 	    		<label>권한 : </label>
 	    		<input type="text" id="userAuthority" name="userAuthority" v-model="user.userAuthority" readonly>
 	    	</div>
-	    
-	    	<div class="form-group">
-	    		<label>비밀번호 : </label>
-	    		<input type="password" id="userPassword" name="userPassword">
-	    	</div>
 	    </form>
     
     	<div id="btn">
-    		<button type="button" @click="update">수정</button>
-    		<button type="button" onclick="location.href='/'">취소</button>
+    		<button type="button" class="btn btn-primary" @click="update">수정</button>
+    		<button type="button" class="btn btn-primary" onclick="location.href='/'">취소</button>
     	</div>
     
     
@@ -50,38 +45,15 @@ let vue = new Vue({
 			let vue = this;
 			let form = $("#updateForm")[0];
 			
-			
 			let data = {
 					userId : vue.user.userId,
 					userPassword :  vue.user.userPassword,
 					userName : vue.user.name 
 			};
 			console.log("data->" + JSON.stringify(data))
-	
+			alert("수정이 완료되었습니다.");	
 			form.submit();
-			
-			
-			/* $.ajax({
-				url : "/users/json/update.ajax",
-				contentType : "application/json; charset=UTF-8",
-				method : 'POST',
-				data : JSON.stringify(data),
-				dataType : 'json',	
-				beforeSend: function(xhr){
-					xhr.setRequestHeader(header, token);
-					
-				   },
-				success : function(data) {
-					alert("수정완료");
-					
-				},
-				error : function(e) {
-					console.log(e);
-					alert('에러 eee');
-				},
-				
-			});  */
-			
+
 
 		},
 		

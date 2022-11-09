@@ -1,26 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<style>
+.input-group {
+	width: 50%;
+}
+.form-select {
+	width:10%;
+}
+.input {
+	width: 78%;
+}
+#writeBtn {
+	float:right;
+}
 
+</style>
 
 
 <h1>list Page</h1>
 <div id="content">
 
 <div class="searchForm">
-	<select name="searchType" id="searchType" v-model="page.searchType">
-		<option value="">전체</option>
+	
+	<div class="input-group">
+	  <select class="form-select" id="inputGroupSelect04">
+	 	<option value="">전체</option>
 		<option value="title">제목</option>
 		<option value="content">내용</option>
-	</select>
-	
-	<input type="text" name="searchKeyword" id="searchKeyword" v-model="page.searchKeyword"
+ 	 </select>
+ 	 <input type="text" name="searchKeyword" id="searchKeyword" class="input" v-model="page.searchKeyword"
 		@keyup.enter="goPage(1)">
-	<button type="button" class="searchBtn" @click="goPage(1)">검색</button>
+  		<button type="button" class="searchBtn btn btn-primary" @click="goPage(1)">검색</button>
+	</div>
 </div>
 	
 
-	<table id="board">
+	<table id="board" class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -43,8 +59,8 @@
 
 	</table>
 	<page :data-search="page" @pagingfn="goPage"></page>
-	<div class="btn">
-		<button type="button" @click="write">글쓰기</button>
+	<div class="">
+		<button type="button" id="writeBtn" @click="write" class="btn btn-primary">글쓰기</button>
 
 	</div>
 </div>

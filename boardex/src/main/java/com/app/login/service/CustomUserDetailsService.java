@@ -19,9 +19,9 @@ public class CustomUserDetailsService  implements UserDetailsService {
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
 		UserVO user = loginDAO.getInfo(userName);
-		System.out.println("########user???#####");
+		//System.out.println("########user???#####"+userName);
 		if(user == null) {
-			System.out.println("########user IS NULL???#####");
+			System.out.println("########user IS NULL#####");
 			throw new UsernameNotFoundException(userName);
 		}
 

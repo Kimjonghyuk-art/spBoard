@@ -3,13 +3,45 @@
 
  <template id="pagination">
  	<div class="pagenation">
- 		<a href="#" v-if="dataSearch.nowPage != 1" @click="paginationfn(1)">&Lt;</a>
+ 	<%-- 	<a href="#" v-if="dataSearch.nowPage != 1" @click="paginationfn(1)">&Lt;</a>
 		<a href="#" v-if="dataSearch.nowPage != 1" @click="paginationfn(dataSearch.nowPage - 1)">&lt;</a>
 	 	<a href="#" 
 	 		v-for="i in pageNum" @click="paginationfn(i)"> {{i}} </a>
 	 	<a href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.nowPage + 1)">&gt;</a>
-		<a href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.endPage)">&Gt;</a>
+		<a href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.endPage)">&Gt;</a> --%>
+		
+		<nav>
+		  <ul class="pagination" style="justify-content: center;">
+		    <li class="page-item">
+		      <a class="page-link" href="#"  v-if="dataSearch.nowPage != 1" @click="paginationfn(1)">
+		        <span aria-hidden="true">&Lt;</span>
+		      </a>
+		    </li>
+		    
+		    <li class="page-item">
+		    	<a class="page-link" href="#" v-if="dataSearch.nowPage != 1" @click="paginationfn(dataSearch.nowPage - 1)">
+		    		<span aria-hidden="true">&lt;</span>
+		    	</a>
+		    </li>
+		    <li class="page-item" v-for="i in pageNum"><a href="#" class="page-link" @click="paginationfn(i)">{{i}}</a></li>
+
+		    <li class="page-item">
+		      <a class="page-link" href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.nowPage + 1)">
+		        <span aria-hidden="true">&gt;</span>
+		      </a>
+		    </li>
+		    
+		     <li class="page-item">
+		      <a class="page-link" href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.endPage)">
+		        <span aria-hidden="true">&Gt;</span>
+		      </a>
+		    </li>
+		    
+		  </ul>
+		</nav>
+
  	</div>
+
  </template>
  
  <script>

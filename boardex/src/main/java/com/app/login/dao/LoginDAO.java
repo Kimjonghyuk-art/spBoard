@@ -26,5 +26,10 @@ public class LoginDAO {
 	public int updateUser(UserVO userVO) {
 		return sql.update("loginDAO.updateUser",userVO);
 	}
+
+	public int idDuplicateCheck(String userId) {
+		System.out.println("DAO->"+userId);
+		return sql.selectOne("loginDAO.idDuplicateCheck",userId);
+	}
 	
 }

@@ -44,30 +44,25 @@ public class LoginController {
 		model.addAttribute("user", mapper.writeValueAsString(loginService.getInfo(principal.getName())));
 		return "/users/update.tiles";
 	}
-	//회원가입 실행
-	@RequestMapping("/signup.do")
 	
-	public String signUp(UserVO userVO) {
-		ModelAndView mav = new ModelAndView("jsonView");
-		loginService.signUp(userVO);
-		return "redirect:/";
-	}
 	
 	//로그인 실행 
-	@RequestMapping("/login.do")
-	public String login(UserVO userVO) {
-		System.out.println(userVO);
-		//ModelAndView mav = new ModelAndView("jsonView");
-		
-		//loginService.signUp(userVO);
-		return "redirect:/";
-	}
+//	@RequestMapping("/login.do")
+//	public String login(UserVO userVO) {
+//		System.out.println(userVO);
+//		//ModelAndView mav = new ModelAndView("jsonView");
+//		
+//		//loginService.signUp(userVO);
+//		return "redirect:/";
+//	}
 	
-	//로그아웃 실행 
-	@RequestMapping("/logout.do")
-	public String logout() {
-		return "/users/signin.tiles";
-	}
+//	//로그아웃 실행 
+//	@RequestMapping("/logout.do")
+//	public String logout() {
+//		return "/users/signin.tiles";
+//	}
+	
+	
 	//회원 정보 보기
 	@RequestMapping("/info.do")
 	public String info(Principal principal, Model model) throws JsonProcessingException {

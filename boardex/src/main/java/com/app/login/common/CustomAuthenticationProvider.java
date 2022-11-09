@@ -8,6 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.app.login.vo.UserVO;
 
@@ -19,7 +21,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		System.out.println("authentication : " + authentication);
-
+		
 		String loginUserName = String.valueOf(authentication.getPrincipal());
 		String loginPassword = String.valueOf(authentication.getCredentials());
 		System.out.println("loginUserName : " + loginUserName);
@@ -47,13 +49,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		return true;
 	}
 	
-	
 	private boolean matchPassword(String loginPassword, String password) {
-
-		return loginPassword.equals(password);
-
+		
+		System.out.println("기존 password -> " + password);
+		System.out.println("입력받은 비밀번호->"+loginPassword);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		if(passwordEncoder.matches(loginPassword, password)) {
+			System.out.println("비밀번호 같같음");	
+		} 
+		
+		return passwordEncoder.matches(loginPassword, password);
 	}
 
-	
-	
 }

@@ -13,7 +13,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class UserDeniedHandler implements AccessDeniedHandler {
 
-	private String errorPage = "/err/errorPage.tiles";
+	private String errorPage = "/err/errorPage.jsp";
 
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse res,

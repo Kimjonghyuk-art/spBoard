@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" %>
 <style>
 	#write {
-		width:50%;
+		width:78%;
 		margin: 0 auto;
 	}
 
@@ -16,33 +16,62 @@
 	#formWrapper input {
 		width: 80%;
 	}
+	.contentarea {
+		border: none;
+		resize: none;	
+	}
+	.contentarea:focus {
+		outline : none;
+	}
+	.floatRight {
+		float: right;
+	}
+	input[type=text] {
+		border : none;
+		
+	}
+	input[type=text]:focus {
+		outline : none;
+	}
+	
 </style>
 <div id="write">
 <h1>upsert Page</h1>
 <div id="formWrapper">
 	<form id="fileForm" enctype="multipart/form-data" method="POST">
 		<input type="hidden" id="idx" name="idx" v-model="info.idx">
-		<div>
-			<label>제목</label>
-			<input type="text" id="title" name="title" v-model="info.title">
+		
+		
+		<table class="table">
+			<tbody>
+				<tr>
+					<th class="table-active">제목</th>
+					<td><input type="text" id="title" name="title" v-model="info.title"></td>
+				</tr>
+				<tr>
+					<th class="table-active">작성자</th>
+					<td><input type="text" id="writer" name="writer" v-model="userId" readonly></td>
+				</tr>
+				<tr>
+					<th class="table-active">내용</th>
+					<td><textarea cols="80" rows="10" type="text" id="content" name="content" v-model="info.content" class="contentarea"></textarea></td>
+				</tr>
+				<tr>
+					<th class="table-active">파일</th>
+					<td><input type="file" id="uploadFile" name="uploadFile"> 
+						<div v-if="file != null">
+							{{file.fileOriginalName}}
+						</div>
+						
+					</td>
+				</tr>
+			</tbody>
+		
+		</table>
+		<div class="floatRight">
+			<button type="button" @click="upsert" class="btn btn-primary">등록</button>
+			<button type="button" @click="cancel" class="btn btn-primary">취소</button>
 		</div>
-		<div>
-			<label>작성자</label>
-			<input type="text" id="writer" name="writer" v-model="info.writer">
-		</div>
-		<div>
-			<label>내용</label>
-			<input type="text" id="content" name="content" v-model="info.content">
-		</div>
-		<div>
-			<label>파일</label>
-			<input type="file" id="uploadFile" name="uploadFile"> 
-			<div v-if="file != null">
-				{{file.fileOriginalName}}
-			</div>
-		</div>
-		<button type="button" @click="upsert">등록</button>
-		<button type="button" @click="cancel">취소</button>
 	</form>
 </div>
 
@@ -53,6 +82,7 @@
 	let vue = new Vue({
 		el: "#write",
 		data: {
+			userId : ${userName},
 			info : ${board},
 			file : ${file},
 		},
@@ -63,10 +93,6 @@
 				if(this.info.title == null || this.info.title == '') {
 					alert('제목을 입력해주세요.');
 					$("#title").focus();
-					return false;
-				} else if(this.info.writer == null || this.info.writer == '') {
-					alert('작성자를 입력해주세요.');
-					$("#writer").focus();
 					return false;
 				} else if(this.info.content == null || this.info.content == '') {
 					alert('내용을 입력해주세요.');
@@ -83,8 +109,8 @@
 				let formData = new FormData(form);
 					
 				
-					console.log("check");
-					formData.append("file", $("input[name=uploadFile]")[0].files[0]);					
+				console.log("check");
+				formData.append("file", $("input[name=uploadFile]")[0].files[0]);					
 				console.log(formData)
 				$.ajax({
 					url : '/board/json/upsert.ajax',
@@ -92,6 +118,9 @@
 					processData : false,
 					type : 'POST',
 					data : formData,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header, token);
+				    },
 					success : function(data) {
 						alert('등록 완료');
 						location.href="/board/list.do";
@@ -102,7 +131,6 @@
 					},
 
 				});
-				
 				
 			},
 

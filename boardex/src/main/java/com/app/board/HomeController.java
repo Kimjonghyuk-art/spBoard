@@ -43,10 +43,14 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		String userName = principal.getName();
-		UserVO vo = loginService.getInfo(userName);
 		
-		model.addAttribute("user", vo);
+		String userName = principal.getName();
+		if(userName != null) {
+			
+			UserVO vo = loginService.getInfo(userName);
+			
+			model.addAttribute("user", vo);
+		}
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";

@@ -1,37 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <style>
 #container {
-width: 50%;
-margin: 0 auto;
+	width: 50%;
+	margin: 0 auto;
 }
+
 #formWrapper {
-width:100%;
-text-align: center;
+	text-align: center;
 }
 
 </style>
 
 <div id="container">
 	<div id="formWrapper">
-	<h1>로그인 페이지</h1>	
-		<form action="/users/login.do" method="post">
-			<div>
-				<label>아이디</label>
-				<input type="text" id="userId" name="userId" v-model="userId" placeholder="id">
-			</div>
-			<div>
-				<label>비밀번호</label>
-				<input type="password" id="userPw" name="userPw" v-model="pw" placeholder="비밀번호를 입력하세요">
-			</div>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<div class="btn">
-				<button type="submit">로그인</button>
-				<button type="button" onclick="location.href='/users/signuppage.do'">회원가입</button>	
-			</div>
-			
-		</form>
+		<div class="">
+			<h1>로그인 페이지</h1>
+			<form action="/users/login.do" method="post">
+				<div class="mb-3 row">
+					<label for="userId" class="col-sm-2 col-form-label">아이디</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="userId" name="userId" v-model="userId" @keypress.enter.prevent>
+					</div>
+				</div>
+
+				<div class="mb-3 row">
+					<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="userPw"
+						name="userPw" v-model="pw" @keypress.enter.prevent @keyup.enter.prevent @keydown.enter.prevent>
+					</div>
+				</div>
+
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+					
+				<div class="">
+					<button type="submit" class="btn btn-primary">로그인</button>
+					<button type="button" class="btn btn-primary"
+						onclick="location.href='/users/signuppage.do'">회원가입</button>
+				</div>
+
+			</form>
+		</div>
 	</div>
 </div>
 

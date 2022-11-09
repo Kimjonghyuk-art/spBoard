@@ -11,6 +11,7 @@ import com.app.board.dao.BoardDAO;
 import com.app.board.vo.BoardFileVO;
 import com.app.board.vo.BoardLikeVO;
 import com.app.board.vo.BoardVO;
+import com.app.login.service.LoginService;
 
 
 @Service("boardService")
@@ -114,7 +115,7 @@ public class BoardService {
 	public int getMaxFileNo() {
 		return boardDAO.getMaxFileNo();
 	}
-	
+	//조회수 증가
 	public int boardHitUp(BoardVO boardVO) {
 		return boardDAO.boardHitUp(boardVO);
 		

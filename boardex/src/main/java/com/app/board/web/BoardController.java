@@ -3,6 +3,7 @@ package com.app.board.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -44,13 +45,15 @@ public class BoardController {
 	
 	//상세 조회 페이지 
 	@GetMapping("/read.do")
-	public String read(Model model,BoardVO boardVO) throws Exception {
+	public String read(Model model,BoardVO boardVO, Principal principal) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		
+		String userId = principal.getName();
 		//조회수 증가
 		boardService.boardHitUp(boardVO);
+		BoardVO vo = boardService.getBoard(boardVO);
 		
-		model.addAttribute("board",mapper.writeValueAsString(boardService.getBoard(boardVO)));
+		model.addAttribute("userId", mapper.writeValueAsString(userId));
+		model.addAttribute("board",mapper.writeValueAsString(vo));
 		model.addAttribute("file",mapper.writeValueAsString(boardService.getFile(boardVO.getIdx())));
 		
 		return "board/read.tiles";
@@ -58,9 +61,11 @@ public class BoardController {
 	
 	//글쓰기 페이지 이동
 	@RequestMapping("/upsert.do")
-	public String upsert(@ModelAttribute BoardVO boardVO, Model model) throws Exception {
+	public String upsert(@ModelAttribute BoardVO boardVO, Model model,Principal principal) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		BoardFileVO boardFileVO = boardService.getFile(boardVO.getIdx());
+		String userName = principal.getName();
+		model.addAttribute("userName", mapper.writeValueAsString(userName));
 		model.addAttribute("board",mapper.writeValueAsString(boardService.upsert(boardVO)));
 		model.addAttribute("file",mapper.writeValueAsString(boardFileVO));
 		return "board/upsert.tiles";
