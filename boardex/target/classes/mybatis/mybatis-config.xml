@@ -18,6 +18,7 @@
 	<typeAliases>
 		<package name="com.app.board"/>
 		<package name="com.app.login"/>
+		<package name="com.app.reply"/>
 		<!-- <typeAlias type="com.app.board.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.app.board.vo.BoardFileVO" alias="BoardFileVO"/>
 		<typeAlias type="com.app.board.vo.BoardLikeVO" alias="BoardLikeVO"/> -->

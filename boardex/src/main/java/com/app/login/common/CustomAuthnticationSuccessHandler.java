@@ -15,7 +15,7 @@ public class CustomAuthnticationSuccessHandler implements AuthenticationSuccessH
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-			System.out.println("컨트롤러 들어옴?");
+			System.out.println("##login Success!! redirect main##");
 		response.sendRedirect("/");
 	}
 

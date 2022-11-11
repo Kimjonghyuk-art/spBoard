@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="loginDAO">
-
+<!-- 회원가입 -->
 <insert id="signUp">
 	INSERT INTO TB_USER (USER_ID
 						, USER_PASSWORD
@@ -11,10 +11,10 @@
 		VALUES(#{userId}
 		       , #{userPassword} 
 		       , #{userName}
-		       , default
+		       , 'ROLE_ADMIN'
 		       , default)
 </insert>
-
+<!-- 유저정보 -->
 <select id="getInfo" parameterType="UserVO" resultType="UserVO">
 	SELECT
 			  USER_ID
@@ -25,7 +25,7 @@
 		FROM TB_USER
 		WHERE USER_ID = #{userId}
 </select>
-
+<!-- 유저 정보 수정 -->
 <update id="updateUser" parameterType="UserVO" >
 	UPDATE tb_user 
 	   SET user_name = #{userName} 
@@ -39,7 +39,12 @@
 SELECT COUNT(user_id) FROM tb_user WHERE user_id = #{userId}
 </select>
 
+<!-- 비밀번호 업데이트 -->
 
+<update id="updatePw" parameterType="UserVO">
+UPDATE tb_user SET user_password = #{userPassword} WHERE user_id = #{userId}
+
+</update>
 
 
 

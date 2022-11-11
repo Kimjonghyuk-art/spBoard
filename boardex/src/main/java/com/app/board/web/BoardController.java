@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.app.board.service.BoardService;
 import com.app.board.vo.BoardFileVO;
 import com.app.board.vo.BoardVO;
+import com.app.reply.service.ReplyService;
+import com.app.reply.vo.ReplyVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysema.commons.lang.URLEncoder;
 
@@ -27,6 +29,9 @@ public class BoardController {
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
+	
+	@Resource(name="replyService")
+	private ReplyService replyService;
 	
 	//전체 조회 페이지
 	@GetMapping("/list.do")
@@ -51,7 +56,10 @@ public class BoardController {
 		//조회수 증가
 		boardService.boardHitUp(boardVO);
 		BoardVO vo = boardService.getBoard(boardVO);
-		
+		ReplyVO replyVO = new ReplyVO();
+		replyVO.setBoardNo(boardVO.getIdx());
+		;
+		model.addAttribute("reply", mapper.writeValueAsString(replyService.findAllReply(replyVO)));
 		model.addAttribute("userId", mapper.writeValueAsString(userId));
 		model.addAttribute("board",mapper.writeValueAsString(vo));
 		model.addAttribute("file",mapper.writeValueAsString(boardService.getFile(boardVO.getIdx())));

@@ -13,16 +13,16 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class UserDeniedHandler implements AccessDeniedHandler {
 
-	private String errorPage = "/err/errorPage.jsp";
+	private String errorPage = "/WEB-INF/views/err/errorPage.jsp";
 
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse res,
 			  AccessDeniedException ade) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		/*
-		 * req.setAttribute("errMsg",ade.getMessage()); req.getRequestDispatcher(
-		 * "/WEB-INF/jsp/egovframework/example/sample/errorPage.jsp").forward(req, res);
-		 */
+		
+		  req.setAttribute("errMsg",ade.getMessage()); 
+		  req.getRequestDispatcher("/WEB-INF/views/err/errorPage.jsp").forward(req, res);
+		 
 
 
 		String ajaxHeader = req.getHeader("X-Ajax-call");

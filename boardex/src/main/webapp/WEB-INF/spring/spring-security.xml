@@ -14,10 +14,11 @@
 
 		<!-- 모든 url 패턴에 ROLE_USER의 권한을 가지고 있을때만 접근가능 -->
 		<!-- <intercept-url pattern="/**" access="ROLE_USER" /> -->
-		<intercept-url pattern="/board/**" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/board/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/users/**" access="permitAll"/>
-		<intercept-url pattern="/resources/**" access="hasRole('ROLE_USER')"/>  
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>  
+		<intercept-url pattern="/resources/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>  
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>  
 		<access-denied-handler ref="userDeniedHandler" />
 
 

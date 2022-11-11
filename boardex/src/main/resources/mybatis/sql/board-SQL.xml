@@ -45,19 +45,15 @@
 
 <select id="getBoard" resultType="BoardVO">
 	SELECT board.idx
-		 , board.title
-		 , board.writer
-		 , board.create_date
-		 , board.hit
-		 , board.content
-         , boardfile.file_no AS fileNo
-         , COUNT(boardlike.like_no) AS likeNo
-     FROM board 
-     JOIN boardfile 
-       ON boardfile.idx = board.idx
-	 JOIN boardlike
-       ON boardlike.board_idx = board.idx
-	WHERE board.idx = #{idx}
+		,board.writer
+        ,board.title
+        ,board.content
+        ,board.create_date
+        ,board.hit
+        ,(SELECT COUNT(board_idx) FROM boardlike WHERE board_idx = #{idx}) AS likeNo
+	FROM board 
+    LEFT JOIN boardfile ON boardfile.idx = board.idx
+    WHERE board.idx = #{idx}
 
 </select>
 

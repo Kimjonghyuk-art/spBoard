@@ -51,13 +51,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	private boolean matchPassword(String loginPassword, String password) {
 		
-		System.out.println("기존 password -> " + password);
-		System.out.println("입력받은 비밀번호->"+loginPassword);
+	
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
-		if(passwordEncoder.matches(loginPassword, password)) {
-			System.out.println("비밀번호 같같음");	
-		} 
 		
 		return passwordEncoder.matches(loginPassword, password);
 	}

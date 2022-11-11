@@ -23,7 +23,7 @@
 		    		<span aria-hidden="true">&lt;</span>
 		    	</a>
 		    </li>
-		    <li class="page-item" v-for="i in pageNum"><a href="#" class="page-link" @click="paginationfn(i)">{{i}}</a></li>
+		    <li class="page-item" v-for="i in pageNum"><a href="#" class="page-link" @click="paginationfn(i)" :class="{isActive : dataSearch.nowPage == i}">{{i}}</a></li>
 
 		    <li class="page-item">
 		      <a class="page-link" href="#" v-if="dataSearch.nowPage < dataSearch.endPage" @click="paginationfn(dataSearch.nowPage + 1)">

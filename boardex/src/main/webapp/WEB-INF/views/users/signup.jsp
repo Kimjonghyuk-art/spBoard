@@ -46,15 +46,12 @@ text-align: center;
 			</div>
 		
 			<div>
-			
 				<input class="form-control" type="password" id="userPw" name="userPw" v-model="userPw" placeholder="8자리이상 16자리이하 특수기호 포함"
 					  :class = "{ 'input-danger' : userPwHasError } " >
 					  <p v-show="valid.userPw" class="input-error">
           				비밀번호 8자리 이상 16자리 이하 특수기호 포함
         			 </p> 
-			
 			</div>
-			
 			<div>
 				<input class="form-control" type="password" id="pwconfirm" v-model="pwconfirm" placeholder="비밀번호 확인"
 				  :class="{ 'input-danger' : pwconfirmHasError }">
@@ -244,6 +241,7 @@ text-align: center;
 						xhr.setRequestHeader(header, token);
 				    },
 					success : function(data) {
+						aleft("회원가입이 완료되었습니다.")
 						location.href = "/";
 					},
 					error : function(e) {
