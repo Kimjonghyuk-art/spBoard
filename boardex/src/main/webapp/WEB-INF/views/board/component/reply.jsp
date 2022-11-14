@@ -13,7 +13,7 @@
     
   
 <script>
-		Vue.component('reply', {
+	/* 	Vue.component('reply', {
 		template: "#replyForm",
 		props: {
 			
@@ -32,6 +32,6 @@
 		
 		
 	});
-	
+	 */
 	
 </script>

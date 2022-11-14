@@ -25,7 +25,13 @@ public class ReplyDAO {
 		return sql.selectList("replyDAO.findAllReply", replyVO);
 	}
 
+	// 댓글 삭제
 	public int delReply(ReplyVO replyVO) {
 		return sql.delete("replyDAO.delReply", replyVO);
+	}
+
+	// 댓글 수정
+	public int updateReply(ReplyVO replyVO) {
+		return sql.update("replyDAO.updateReply", replyVO);
 	}
 }

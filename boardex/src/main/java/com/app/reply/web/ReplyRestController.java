@@ -16,35 +16,41 @@ import com.app.reply.vo.ReplyVO;
 @RequestMapping("/reply/json")
 public class ReplyRestController {
 
-	@Resource(name="replyService")
+	@Resource(name = "replyService")
 	private ReplyService replyService;
-	
-	//댓글 등록
+
+	// 댓글 등록
 	@RequestMapping("/insertreply.ajax")
 	public ModelAndView insertReply(@RequestBody ReplyVO replyVO) {
 		ModelAndView mav = new ModelAndView("jsonView");
-		
+
 		replyService.insertReply(replyVO);
 		return mav;
 	}
 
-	//댓글 조회
+	// 댓글 조회
 	@RequestMapping("/findallreply.ajax")
 	public ModelAndView findallReply(@RequestBody ReplyVO replyVO) {
 		ModelAndView mav = new ModelAndView("jsonView");
-		//replyService.findAllReply(replyVO);
-		mav.addObject("reply",replyService.findAllReply(replyVO));
+		// replyService.findAllReply(replyVO);
+		mav.addObject("reply", replyService.findAllReply(replyVO));
 		return mav;
 	}
 
-	//댓글 삭제
+	// 댓글 삭제
 	@RequestMapping("/delreply.ajax")
 	public ModelAndView delReply(@RequestBody ReplyVO replyVO) {
 		ModelAndView mav = new ModelAndView("jsonView");
-			replyService.delReply(replyVO);
+		replyService.delReply(replyVO);
 		return mav;
 	}
 
-
+	// 댓글 수정
+	@RequestMapping("/updatereply.ajax")
+	public ModelAndView updateReply(@RequestBody ReplyVO replyVO) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		replyService.updateReply(replyVO);
+		return mav;
+	}
 
 }

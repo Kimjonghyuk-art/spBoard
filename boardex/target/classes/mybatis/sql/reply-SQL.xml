@@ -42,7 +42,12 @@ SELECT reply_no
 
 </delete>
 
+<!-- 댓글 수정 -->
 
+<update id="updateReply" parameterType="replyVO">
+UPDATE reply SET content = #{content} WHERE reply_no = #{replyNo}
+
+</update>
 
 
 </mapper>
