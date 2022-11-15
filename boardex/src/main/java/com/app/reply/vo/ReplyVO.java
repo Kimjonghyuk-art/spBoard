@@ -7,8 +7,8 @@ public class ReplyVO {
 
 	private int replyNo;
 	private int boardNo;
-	private int parentNo;
-	private int dept;
+	private String parentNo;
+	private int depth;
 	private String content;
 	private String replyDate;
 	private String writer;

@@ -12,8 +12,8 @@ INSERT INTO reply ( board_no
 				  , reply_date
 				  , writer )
 	 VALUES ( #{boardNo}
-	 		, 1
-	 		, 1
+	 		, #{parentNo, jdbcType=VARCHAR}
+	 		, #{depth}
 	 		, #{content}
 	 		, default
 	 		, #{writer} ) 
@@ -32,13 +32,14 @@ SELECT reply_no
 	 , writer
   FROM reply
  WHERE board_no = #{boardNo}
+ ORDER BY IF(ISNULL(parent_no), reply_no, parent_no), reply_date
 
 </select>
 
 <!--댓글 삭제 -->
 <delete id="delReply" parameterType="replyVO">
 
-	DELETE FROM reply WHERE reply_no = #{replyNo}
+	DELETE FROM reply WHERE reply_no = #{replyNo} OR parent_no = #{replyNo}
 
 </delete>
 

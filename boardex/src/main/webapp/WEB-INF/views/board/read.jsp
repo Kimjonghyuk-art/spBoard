@@ -37,6 +37,12 @@
 	margin-left: 2%;
 	font-size: small;
 }
+p {
+	margin-bottom: 0;
+}
+.re-reply {
+	margin-left : 5%;
+}
 </style>
 <h1>read Page</h1>
 <div id="info">
@@ -134,24 +140,68 @@ $("document").ready(function(){
 		
 		replyUDevent();
 		
-		//대댓
+		//대댓폼 추가
 		addReply();
-		
-		
 		
 });
 
-function addReply(e) {
-	console.log("에드리플ㄹ");
-	let ele = $(e.target);
-	console.log(ele.tagName)
-	let node = "<textarea></textarea>";
+function addReply() {
 	
-	
-	
-	//$(".reply-item").append(node);
+	$("#replyList").on("click", "li", function(e) {
+		let ele = e.target.tagName;
+		//$("#replyList").find("textarea[name=reReplyContent]").remove();
+		if(ele != "P") return;
+		
+		
+		
+		if($("#replyList").find("textarea[name=reReplyContent]").length >= 1) {
+			$("textarea[name=reReplyContent]").remove();
+			$("button[name=reReplyBtn]").remove();
+		}
+		
+		//console.log($(this).find("div:eq(1)").parent().parent());
+		
+		let reReplyContent = $(this).find("div:eq(1)");
+		if(!$(this).parent().hasClass('re-reply')) {
+		let node = "<div style='margin-left:5%;'>";	
+		node += "<textarea name='reReplyContent' cols='100' ></textarea>";
+		node += "<button type='button' class='btn btn-primary btn-sm' name='reReplyBtn' id='reReplyAddBtn' style='margin-bottom: 3.5%;margin-left: 1%;'>등록</button>";
+		node += "</div>";
+		$(this).append(node);
+		}
+		
+	});
 }
 
+function reReplyAdd(replyNo) {
+	let reReplyContent = $("textarea[name=reReplyContent]").val();
+	let userId = $("#loginUserId").val();
+	let boardNo = $("#boardNo").val();
+	let replyData = {parentNo : replyNo, content : reReplyContent, writer : userId, boardNo : boardNo}
+	console.log(replyData);
+	
+	 $.ajax({
+	 	url : '/reply/json/insertreply.ajax',
+	 	contentType : "application/json; charset=UTF-8",
+	 	method : 'POST',
+	 	data : JSON.stringify(replyData),
+	 	dataType : 'json',
+	 	beforeSend: function(xhr){
+			xhr.setRequestHeader(header, token);
+		   },
+	 	success : function(data) {
+	 		alert('댓글 등록완료');
+	 		$("#replyContent").val('');
+	 		findAllReply();
+					
+	 		},
+	 		error : function(e) {
+		 		console.log(e);
+		 		alert('에러 발생\n관리자에게 문의하세요.');
+	 		},
+	 	}); 
+	
+}
 
 function findAllReply() {
 	
@@ -184,11 +234,11 @@ function replyMakeRow(obj) {
 	loginUser = $("#loginUserId").val();
 	console.log(`udx->${idx}`);
 	
-	let node = "<div>";
+	let node = "<div class='reply-wrapper'>";
 	node += "<li class='reply-item'>";
 	node += "<input type='hidden'>";
  	node += "<div class='replyWriter inline'><span>"+obj.writer+"</span></div>";
-	node += "<div class='replyContent inline' onclick='addReply()'><p style='width:70%;'>"+obj.content+"</p></div>";
+	node += "<div class='replyContent inline'><p style='width:100%;'>"+obj.content+"</p></div>";
 	node += "<div class='replyDate inline'><span>"+obj.replyDate.substr(5)+"</span></div>";
 	if(loginUser == obj.writer) {
 		node+= "<button type='button' class='inline btn btn-primary btn-sm'>수정</button>"
@@ -200,13 +250,19 @@ function replyMakeRow(obj) {
 		
 	$("#replyList").append(node);
 	
+	if(obj.parentNo != null) {
+		$(".reply-wrapper").last().addClass('re-reply');
+		$(".reply-wrapper").last().children().prepend('<img id="reply.png" style="width:10px; margin-right:4px;" src="/resources/images/board/reply-ico.png"/>');
+	} else {
+		$(".replyContent").last().css({"cursor": "pointer"});
+	};
+	
 	$("#replyList").find('input[type=hidden]').last().val(obj.replyNo);
 };
 function replyUDevent() {
 	$("#replyList").on("click", "li", function(e) {
 		
 		let element = e.target.tagName;
-		//console.log(element);
 	
 		if(element != "BUTTON") return;
 		
@@ -218,7 +274,6 @@ function replyUDevent() {
 			 
 			 $(this).find($(".replyContent")).append(node);
 			 e.target.textContent = '저장';
-			//replyInclude(replyContent.text());
 			
 		} else if(e.target.textContent == '삭제') {
 			let replyNo = $(this).find("input[type=hidden]").val();
@@ -233,7 +288,10 @@ function replyUDevent() {
 			 updateReply(replyNo,replyContent.val());
 			 
 			 e.target.textContent = '수정';
-		} 
+		} else if(e.target.textContent == '등록') {
+			let replyNo = $(this).find("input[type=hidden]").val();
+			reReplyAdd(replyNo);
+		}
 		
 	});
 }
@@ -261,7 +319,6 @@ function delReply(replyNo) {
 		 	},
 		 });
 	
-	
 }
 function updateReply(replyNo,replyContent) {
 	console.log("수정 실행 -> ")
@@ -280,17 +337,12 @@ function updateReply(replyNo,replyContent) {
 			   },
 		 	success : function(data) {
 		 		alert('수정 완료');
-		 		//findAllReply();
 		 	},
 		 	error : function(e) {
 		 		console.log(e);
 		 		alert('수정에러 발생');
 		 	},
 		 });
-	
-	
-
-	
 	
 }
 	

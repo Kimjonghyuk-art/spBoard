@@ -38,6 +38,12 @@
 		</div>
 	</sec:authorize>
 	
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<h1>관리자만 보입니다.</h1>
+		<a href="/admin/readexcelpage.do">엑셀읽기 테스트</a>
+	</sec:authorize>
+	
+	
 	
 	
 	<form action="/board/list.do" method="POST">

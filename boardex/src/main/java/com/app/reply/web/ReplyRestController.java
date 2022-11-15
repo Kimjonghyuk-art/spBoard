@@ -24,6 +24,14 @@ public class ReplyRestController {
 	public ModelAndView insertReply(@RequestBody ReplyVO replyVO) {
 		ModelAndView mav = new ModelAndView("jsonView");
 
+//		if(!replyVO.getParentNo().equals("0")) {
+//			System.out.println("대댓글");
+//			replyVO.setDept(2);
+//		} else {
+//			replyVO.setDept(1);
+//			//replyVO.setParentNo(null);
+//		}
+		System.out.println(replyVO.toString());
 		replyService.insertReply(replyVO);
 		return mav;
 	}

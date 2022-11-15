@@ -29,7 +29,7 @@
 					<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
 					<div class="col-sm-10">
 						<input type="password" class="form-control" id="userPw"
-						name="userPw" v-model="pw" @keypress.enter.prevent @keyup.enter.prevent @keydown.enter.prevent>
+						name="userPw" v-model="pw" @keyup.enter="submit">
 						<a href="/users/passwordreset.do" class="fs-6">Forgot password?</a>
 					</div>
 				</div>
