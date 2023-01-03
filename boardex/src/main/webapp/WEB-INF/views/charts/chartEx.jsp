@@ -18,6 +18,8 @@
 .graphUnit {
 	margin-left: 2%;
 }
+
+
 </style>
     <h1>차트페이지</h1>
     
@@ -28,8 +30,8 @@
 				<h6>
 					파이차트 <span class="chul">출처 : 률류</span><span class="chul graphUnit">단위(%)</span>
 						<div class="utilBox">
-							<button class="cbtn_chart" v-on:click="viewChart('chart_1', 'tb_1')">차트보이기</button>
-							<button class="cbtn_table" v-on:click="viewTable('tb_1', 'chart_1')">그래프보이기</button>
+							<button class="cbtn_chart" v-on:click="viewChart('pieChart', 'pieTable')">차트보이기</button>
+							<button class="cbtn_table" v-on:click="viewTable('pieTable', 'pieChart')">그래프보이기</button>
 							<button class="cbtn_down"  v-on:click="excelDown('chart_1', '세입예산')">엑셀</button>
 						</div>
 				</h6>			
@@ -134,7 +136,7 @@ var vm = new Vue({
 	],
 	},
 	methods: {
-		createPieChart : function(id,data) {
+		createPieChart : function(id,data) { //파이 차트 생성
 			var chart = am4core.create(id, am4charts.PieChart);
 			
 			var series = chart.series.push(new am4charts.PieSeries());
@@ -147,7 +149,7 @@ var vm = new Vue({
 			/*amchart 로고 제거*/
 	        $("g[aria-labelledby^='id-']g[aria-labelledby$='-title']").css("display", "none");
 		},
-		createXyChart(id,data) {
+		createXyChart(id,data) { //xy차트 생성
 			// Create chart instance
 			var chart = am4core.create(id, am4charts.XYChart); //차트 생성
 			chart.scrollbarX = new am4core.Scrollbar(); // 스크롤바 생성
@@ -161,17 +163,17 @@ var vm = new Vue({
 			
 			var series = chart.series.push(new am4charts.ColumnSeries());
 			series.name = "Sales";
-			series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
+			series.tooltipText = "{name}: [bold]{valueY}[/]";
+			series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}"; // 커서 올렸을 떄 툴팁
 			//series.columns.template.fill = am4core.color("#104547"); // fill
 			series.dataFields.valueY = "litres";
 			series.dataFields.categoryX = "country";
 			
 			chart.data = data;
-			
-			 $("g[aria-labelledby^='id-']g[aria-labelledby$='-title']").css("display", "none");
 			 
 			 var series2 = chart.series.push(new am4charts.LineSeries());
 			 series2.name = "Units";
+			 series2.tooltipText = "{name}: [bold]{valueY}[/]"; // 커서 올렸을 떄 툴팁 
 			 series2.stroke = am4core.color("#CDA2AB");
 			 series2.strokeWidth = 3;
 			 series2.dataFields.valueY = "units";
@@ -186,12 +188,55 @@ var vm = new Vue({
 			 
 			  chart.cursor = new am4charts.XYCursor();
 			  
+			  $("g[aria-labelledby^='id-']g[aria-labelledby$='-title']").css("display", "none");
+			  
+		},
+		
+		//테이블 보이기
+		viewTable : function(tbId, chartId) {
+			$("#" + chartId).hide();
+			$("#" + tbId).show();
+		},
+		//차트보이기
+		viewChart : function(chartId, tbId) {
+			$("#" + tbId).hide();
+			$("#" + chartId).show();
+		},
+		//테이블 생성
+		createTable : function(id) {
+			$("#" + id).empty(); // 선택 요소 내용 제거
+			var row = '<div class="table_box">';
+			row += '<table class="table table-striped table-hover">';
+			row += '<thead><tr>';
+			if(id == 'pieTable') {
+				var category = ['국가', '리터'];
+				for(var i = 0 ; i < category.length; i++) {
+					row += '<th>' + category[i] + '</th>';
+				}
+				row += '</tr></thead>';
+				row += '<tbody>';
+				
+				for(var i = 0 ; i < this.data.length; i++) {
+					row += '<tr><td>' + this.data[i].country + '</td>';
+					row += '<td>' + this.data[i].litres + '</td></tr>';
+				}
+				row += '</tbody>';
+			}
+			
+			row += '</table></div>';
+			$("#" + id).append(row);
+			
 		},
 		
 	},
 	mounted : function () {
 		this.createPieChart('pieChart',this.data);
 		this.createXyChart('xyChart',this.xyData);
+		
+		$("#pieTable").hide();
+		
+		//테이블 그리기
+		this.createTable('pieTable');
 		
 	},
 	

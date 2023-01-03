@@ -13,4 +13,9 @@ public class ChartController {
 		return "charts/chartEx.tiles";
 	}
 	
+	@RequestMapping("/cmmChartEx.do")
+	public String moveCmmChartEx() {
+		return "charts/cmmChartEx.tiles";
+	}
+	
 }

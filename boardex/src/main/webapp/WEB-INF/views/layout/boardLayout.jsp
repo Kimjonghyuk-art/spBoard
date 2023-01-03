@@ -19,6 +19,7 @@ integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WT
 <script src="//cdn.amcharts.com/lib/4/core.js"></script>
 <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
 <script src="//cdn.amcharts.com/lib/4/maps.js"></script>
+<script type="text/javascript" src="/resources/js/common/commonChart.js"></script>
 
 <style>
 	#mainContainer {

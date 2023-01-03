@@ -32,6 +32,7 @@
 		
 		<h1><a href="/board/list.do">게시판이동</a></h1> 
 		<h1><a href="/charts/chartEx.do">차트테스트</a></h1>
+		<h1><a href="/charts/cmmChartEx.do">공통차트분리테스트</a></h1>
 		<div>
 			<button type="button" onclick="location.href='/users/info.do'">내정보 보기</button>
 		
